@@ -2,6 +2,7 @@ import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 from pyqtgraph.dockarea import *
 from pyqtgraph.dockarea.Dock import DockLabel
+from pyqtgraph.dockarea.DockArea import *
 import types
 
 def RGBToHTMLColor(rgb_tuple):
@@ -15,15 +16,28 @@ class MyDockArea(DockArea):
     def __init__(self,*args,**kwargs):
         super(MyDockArea,self).__init__(*args,**kwargs)
 
+
     def clear(self):
         docks = self.findAll()[1]
         for dock in docks.values():
             print "CLOSE DOCK"
-            if dock.closable:
+            if False:#dock.closable:
                 dock.close()
             else:
                 self.home.moveDock(dock, "top", None)
 
+    def addTempArea(self):
+        if self.home is None:
+            area = DockArea(temporary=True, home=self)
+            self.tempAreas.append(area)
+            win = TempAreaWindow(area)
+            win.setWindowFlags(QtCore.Qt.WindowMinimizeButtonHint)
+            area.win = win
+            win.show()
+        else:
+            area = self.home.addTempArea()
+        #print "added temp area", area, area.window()
+        return area
 
 class ColorDock(Dock):
 
