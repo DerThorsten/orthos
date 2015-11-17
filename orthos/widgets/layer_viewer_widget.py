@@ -36,7 +36,7 @@ class LayerViewerOptions(object):
 
 
 
-class  MainWindow(QtGui.QMainWindow):
+class MainWindow(QtGui.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow,self).__init__(*args,**kwargs)
         self.closeCallback = None
@@ -44,6 +44,12 @@ class  MainWindow(QtGui.QMainWindow):
         if self.closeCallback is not None:
             self.closeCallback()
 
+        self.viewerWidget.onClose()
+
+
+    def setCentralWidget(self, viewerWidget):
+        self.viewerWidget = viewerWidget
+        super(MainWindow, self).setCentralWidget(viewerWidget)
 
 class LayerViewerWidget(QtGui.QWidget):
 
@@ -103,6 +109,10 @@ class LayerViewerWidget(QtGui.QWidget):
             self.timeCtrlDock.widgetArea.setSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
             self.timeCtrlWidget.setSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
             self.timeCtrlDock.addWidget(self.timeCtrlWidget)
+
+    def onClose(self):
+        self.area.onClose()
+
 
     def yieldViewBoxes(self):
         for vbw in self.viewBoxWidgets:

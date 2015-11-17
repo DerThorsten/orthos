@@ -39,6 +39,12 @@ class MyDockArea(DockArea):
         #print "added temp area", area, area.window()
         return area
 
+
+    def onClose(self):
+        for t in self.tempAreas:
+            t.win.close()
+            t.close()
+
 class ColorDock(Dock):
 
 
@@ -87,7 +93,4 @@ class ColorDock(Dock):
         method = types.MethodType(labelUpdateStyle, self.label)
         self.label.updateStyle = method
         self.label.updateStyle()
-
-
-
 
