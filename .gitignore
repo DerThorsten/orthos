@@ -15,4 +15,5 @@ progress.marks
 CTestTestfile.cmake
 Makefile
 cmake_install.cmake
-
+.idea
+*.log
