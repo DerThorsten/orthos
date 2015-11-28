@@ -55,6 +55,10 @@ class InfiniteBlockedViewBox(pg.ViewBox):
         self.invertY(True)
 
 
+
+        
+        #self.background.setPen(pg.mkPen(style=QtCore.Qt.Dense7Pattern))
+        #self.setBackgroundColor('w')
         # buffer pixel size and view rect
         self.viewPixelSizeBuffer = None #self.viewPixelSize()
         self.viewRectBuffer = None #self.state['viewRange']
@@ -112,6 +116,31 @@ class InfiniteBlockedViewBox(pg.ViewBox):
 
         self.bestBlockIndex = None 
 
+        self.updateBackground()
+
+    def updateBackground(self):
+
+        self.background.show()
+        self.background.setVisible(True)
+        #self.background.setPen(pg.mkPen(color=(0,200,1)))
+
+        g =  QtGui.QLinearGradient(
+                                   QtCore.QRectF(self.rect()).topLeft(),
+                                   QtCore.QRectF(self.rect()).bottomLeft()
+        )
+        g.setColorAt(0, QtGui.QColor.fromRgbF(0.3, 0.3, 0.3, 1));
+        g.setColorAt(1, QtGui.QColor.fromRgbF(0.6, 0.6, 0.6, 1));
+
+
+        brush = QtGui.QBrush(g)
+        #brush.setStyle(QtCore.Qt.LinearGradientPattern)
+        #brush.setColor(pg.mkColor((200,200,200)))
+
+        self.background.setBrush(brush)
+
+    def setBackgroundColor(self):
+
+        self.updateBackground() 
 
     def findBestBlockIndex(self):
         bestBlockIndex = 0
@@ -133,6 +162,7 @@ class InfiniteBlockedViewBox(pg.ViewBox):
 
     # range change events
     def rangeChanged(self,*args,**kwargs):
+        self.updateBackground()
         #print "rect buffer",self.viewRectBuffer
         #print "ps   buffer",self.viewPixelSizeBuffer
 

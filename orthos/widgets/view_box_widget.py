@@ -161,13 +161,13 @@ class ViewBoxWidget(QtGui.QWidget):
         #l.setVerticalSpacing(1) 
         
         
-        self.scalesAdded = True
-        self.textAdded = True
-        l.addItem(self.textItem1, 0, 1)
+        self.scalesAdded = False
+        self.textAdded = False
+        #l.addItem(self.textItem1, 0, 1)
         
-        l.addItem(self.yScale, 1, 0)
+        #l.addItem(self.yScale, 1, 0)
         l.addItem(self.viewBox, 1, 1)
-        l.addItem(self.xScale, 2, 1)
+        #l.addItem(self.xScale, 2, 1)
 
         self.gv.setCentralItem(l)
         self.mainLayout.addWidget(self.gv)
