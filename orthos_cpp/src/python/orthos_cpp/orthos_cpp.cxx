@@ -411,6 +411,12 @@ void exportLuts(){
 //void extendQt();
 void exportLayer();
 
+namespace orthos{
+    void exportAxis();
+    void exportPlane();
+    
+}
+
 BOOST_PYTHON_MODULE_INIT(_orthos_cpp)
 {
     vigra::import_vigranumpy();
@@ -422,6 +428,9 @@ BOOST_PYTHON_MODULE_INIT(_orthos_cpp)
     exportTileGrid();
     exportMaps();
     exportLuts();
+
+    orthos::exportAxis();
+    orthos::exportPlane();
 
     //extendQt();
     exportLayer();

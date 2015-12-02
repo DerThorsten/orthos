@@ -6,20 +6,75 @@ import numpy
 from _orthos_cpp import *
 
 
+def injector(classToExtend):
+
+    class injectorCls(object):
+        class __metaclass__(classToExtend.__class__):
+            def __init__(self, name, bases, dict):
+                for b in bases:
+                    if type(b) not in (self, type):
+                        for k,v in dict.items():
+                            setattr(b,k,v)
+                return type.__init__(self, name, bases, dict)
+    return injectorCls
 
 
 
-class injector(object):
-    class __metaclass__(TileInfo.__class__):
-        def __init__(self, name, bases, dict):
-            for b in bases:
-                if type(b) not in (self, type):
-                    for k,v in dict.items():
-                        setattr(b,k,v)
-            return type.__init__(self, name, bases, dict)
+
+def axis(shape, name=None, shortName=None, color=(-1,-1,-1,-1), 
+         isChannelAxis=False , channelNames=StringVector()):
+
+    return _orthos_cpp._axis(
+        shape = int(shape),
+        name = name,
+        shortName = shortName,
+        color = [int(c) for c in color],
+        isChannelAxis=bool(isChannelAxis),
+        channelNames=channelNames
+    )
 
 
-class MoreTileInfo(injector, TileInfo):
+def axisVector(axis=[]):
+    axisVector = AxisVector()
+    for a in axis:
+        axisVector.addAxis(a)
+    return axisVector
+
+
+def plane(name, xAxis, yAxis, zAxis=-1):
+    return Plane(name=name, xAxis=int(xAxis),
+                 yAxis=int(yAxis), zAxis=int(zAxis))
+    
+
+def planeVector(planes=[]):
+    vector = PlaneVector()
+    for p in planes:
+        vector.addPlane(p)
+
+
+class MoreAxis(injector(Axis),Axis):
+
+    def __str__(self):
+        out = "[name=%s, shortName=%s, shape=%d"%(self.name, self.shortName, self.shape)
+        if self.hasColor():
+            out += ", color=%s"%str(self.color)
+        if self.isChannelAxis():
+            out =", channelAxis"
+        out +="]"
+        return out
+
+class MoreAxisVector(injector(AxisVector),AxisVector):
+
+    def __str__(self):
+        out = ""
+        for ai in range(len(self)):
+            axis = self[ai]
+            out += "Axis %d %s"%(ai,str(axis))
+            if ai != len(self)-1:
+                out +="\n"
+        return out
+
+class MoreTileInfo(injector(TileInfo), TileInfo):
 
 
     def slicing3d(self):

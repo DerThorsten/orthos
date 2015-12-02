@@ -6,6 +6,8 @@
 add_library( _orthos_cpp SHARED
     orthos_cpp.cxx
     #extend_qt.cxx
+    axis.cxx
+    plane.cxx
     layer.cxx
 )
 #--------------------------------------------------------------
