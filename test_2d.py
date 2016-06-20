@@ -20,29 +20,24 @@ mw.resize(800, 600)
 
 
 
-shape = (1000,1000,500)
+shape = (1000,1000)
 data = numpy.random.rand(*shape)*255.0
 data = data.astype('uint8')
 
-
 print "start"
 opt = LayerViewerOptions()
-opt.spatialDimensions = 3
+opt.spatialDimensions = 2
 opt.hasTimeAxis = False
 
 viewerWidget = LayerViewerWidget(spatialShape=shape, options=opt)
 mw.setCentralWidget(viewerWidget)
 
 
-for x in range(5):
-    with vigra.Timer("create raw layer"):
-        f = "/home/tbeier/Desktop/input/raw.h5"
-        #f = "/media/tbeier/data/datasets/hhess/2x2x2nm_chunked/data.h5"
-        rawSource = NumpyArrayDataSource(data)
-        rawLayer = GrayscaleLayer(name='raw%d'%x,levels=[0,255],dataSource=rawSource,useLut=True)
-        viewerWidget.addLayer(rawLayer)
 
-
+with vigra.Timer("create raw layer"):
+    rawSource = NumpyArrayDataSource(data)
+    rawLayer = GrayscaleLayer(name='raw%d'%x,levels=[0,255],dataSource=rawSource,useLut=True)
+    viewerWidget.addLayer(rawLayer)
 
 
 

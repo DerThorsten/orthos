@@ -26,7 +26,7 @@ private:
 class Axis{
 public:
 
-    typedef vigra::TinyVector<int8_t, 4> Color;
+    typedef vigra::TinyVector<int16_t, 4> Color;
     typedef std::vector<std::string> StringVector;
 
     Axis(

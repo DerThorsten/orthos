@@ -23,12 +23,13 @@ def injector(classToExtend):
 
 def axis(shape, name=None, shortName=None, color=(-1,-1,-1,-1), 
          isChannelAxis=False , channelNames=StringVector()):
-
+    
+    c = [int(c) for c in color]
     return _orthos_cpp._axis(
         shape = int(shape),
         name = name,
         shortName = shortName,
-        color = [int(c) for c in color],
+        color = c,
         isChannelAxis=bool(isChannelAxis),
         channelNames=channelNames
     )
@@ -50,6 +51,7 @@ def planeVector(planes=[]):
     vector = PlaneVector()
     for p in planes:
         vector.addPlane(p)
+    return vector
 
 
 class MoreAxis(injector(Axis),Axis):
@@ -100,18 +102,19 @@ class ValToRgba(object):
 
 
     dtypeDict = {
-        numpy.uint8     : 'uint8',
-        numpy.uint16    : 'uint16',
-        numpy.uint32    : 'uint32',
-        numpy.uint64    : 'uint64',
-        numpy.int8      : 'int8',
-        numpy.int16     : 'int16',
-        numpy.int32     : 'int32',
-        numpy.int64     : 'int64',
-        numpy.float32   : 'float32',
-        numpy.float64   : 'float64',
-
-        numpy.dtype('uint8') : 'uint8'
+        numpy.uint8          : 'uint8',
+        numpy.uint16         : 'uint16',
+        numpy.uint32         : 'uint32',
+        numpy.uint64         : 'uint64',
+        numpy.int8           : 'int8',
+        numpy.int16          : 'int16',
+        numpy.int32          : 'int32',
+        numpy.int64          : 'int64',
+        numpy.float32        : 'float32',
+        numpy.float64        : 'float64',
+        numpy.dtype('uint8') : 'uint8',
+        numpy.dtype('uint32') : 'uint32',
+        numpy.dtype('uint64') : 'uint64'
     }
 
     @classmethod

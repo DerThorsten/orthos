@@ -26,7 +26,12 @@ Axis * pyAxisFactory(
 ){
     python::stl_input_iterator<int> begin(colorObj), end;
     Axis::Color color(-1);
-    std::copy(begin, end, color.begin());
+    auto c = 0;
+    while(begin!=end){
+        color[c] = *begin;
+        ++begin;
+        ++c;
+    }
     return new Axis(shape, name, shortName, color, isChannelAxis, channelNames);
 }
 

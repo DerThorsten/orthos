@@ -19,15 +19,34 @@ namespace orthos{
         Plane(const std::string & name,
               const int xAxis,
               const int yAxis,
-              const int zAxis=0)
+              const int zAxis=-1,
+              const int planeIndex = -1)
         :   name_(name),
             xAxis_(xAxis),
             yAxis_(yAxis),
-            zAxis_(zAxis){
+            zAxis_(zAxis),
+            planeIndex_(planeIndex){
         }
-        const std::string & name() const{
+        std::string  name() const{
             return name_;
         }
+        int xAxis()const{
+            return xAxis_;
+        }
+        int yAxis()const{
+            return yAxis_;
+        }
+        int zAxis()const{
+            return zAxis_;
+        }
+        int planeIndex()const{
+            return planeIndex_;
+        }
+
+        void setPlaneIndex(const int i){
+            planeIndex_ = i;
+        }
+
     private:
         // the name of the plane
         std::string name_;
@@ -36,6 +55,9 @@ namespace orthos{
         int xAxis_;
         int yAxis_;
         int zAxis_;
+
+        // the index of the plaine
+        int planeIndex_;
     };
 
 
@@ -52,6 +74,12 @@ namespace orthos{
                 throw std::runtime_error("duplicate in planne names");
             }
             planes_.push_back(plane);
+        }
+        size_t size()const{
+            return planes_.size();
+        }
+        const Plane & getPlane(const size_t i)const{
+            return planes_[i];
         }
     private:
         std::vector<Plane> planes_;

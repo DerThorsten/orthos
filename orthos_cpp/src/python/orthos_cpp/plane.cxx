@@ -25,21 +25,31 @@ namespace orthos{
                 const std::string &,
                 const int,
                 const int,
+                const int,
                 const int
             >(
                 (
                     python::arg("name"),
                     python::arg("xAxis"),
                     python::arg("yAxis"),
-                    python::arg("zAxis") = -1
+                    python::arg("zAxis") = -1,
+                    python::arg("planeIndex") = -1
                 )
             )
         )
+            .add_property("name", &Plane::name)
+            .add_property("xAxis", &Plane::xAxis)
+            .add_property("yAxis", &Plane::yAxis)
+            .add_property("zAxis", &Plane::zAxis)
+            .add_property("name",  &Plane::name)
+            .add_property("planeIndex",  &Plane::planeIndex, &Plane::setPlaneIndex)
         ;
 
 
         python::class_<PlaneVector>("PlaneVector",python::init<>())
             .def("addPlane",&PlaneVector::addPlane)
+            .def("__len__",&PlaneVector::size)
+            .def("__getitem__",&PlaneVector::getPlane, python::return_internal_reference<>())
         ;
 
     }

@@ -9,7 +9,7 @@ from orthos.widgets import *
 from orthos.layers import *
 from orthos.data_source import *
 
-pg.setConfigOptions(antialias=False,useOpenGL=False,useWeave=True)
+pg.setConfigOptions(antialias=False,useOpenGL=True,useWeave=True)
 
 app = QtGui.QApplication([])
 mw = MainWindow()
@@ -44,12 +44,12 @@ if True:
         pmapLayer = GrayscaleLayer(name='pmap',levels='auto',dataSource=pmapSource,useLut=True)
 
 
-    #with vigra.Timer("create sv layer"):
-    #    ## supervoxel layer
-    #    f = "/home/tbeier/Desktop/input/superpixels_10000.h5"
-    #    superVoxelSource = VigraChunkedArrayHdf5(file_name=f,dataset_name='data')
-    #    superVoxelLayer = SupervoxelLayer(name='sv',dataSource=superVoxelSource)
-    #    objectLayer = ObjectLayer(name='obj',dataSource=superVoxelSource)
+    with vigra.Timer("create sv layer"):
+        ## supervoxel layer
+        f = "/home/tbeier/Desktop/input/superpixels_10000c.h5"
+        superVoxelSource = VigraChunkedArrayHdf5(file_name=f,dataset_name='data')
+        superVoxelLayer = SupervoxelLayer(name='sv',dataSource=superVoxelSource)
+        objectLayer = ObjectLayer(name='obj',dataSource=superVoxelSource)
 
 
     with vigra.Timer("create paint layer"):
@@ -86,10 +86,10 @@ with vigra.Timer("add raw layer"):
 if True:
     with vigra.Timer("add pmap layer"):
         viewerWidget.addLayer(pmapLayer)
-    #with vigra.Timer("add sv layer"):
-    #    viewerWidget.addLayer(superVoxelLayer)
-    #with vigra.Timer("add obj layer"):
-    #    viewerWidget.addLayer(objectLayer)
+    with vigra.Timer("add sv layer"):
+        viewerWidget.addLayer(superVoxelLayer)
+    with vigra.Timer("add obj layer"):
+        viewerWidget.addLayer(objectLayer)
     with vigra.Timer("add paint layer"):
         viewerWidget.addLayer(paintLayer)
 
