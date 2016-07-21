@@ -12,14 +12,16 @@
 
 
 typedef vigra::MultiBlocking<2> Blocking2d;
+typedef vigra::MultiBlocking<3> Blocking3d;
 typedef typename Blocking2d::Shape Shape2d;
 typedef typename Blocking2d::Block Block2d;
+typedef typename Blocking3d::Block Block3d;
 typedef vigra::TinyVector<float, 2> Float2;
 
 typedef vigra::TinyVector<int64_t, 1> Shape1;
 typedef vigra::TinyVector<int64_t, 2> Shape2;
 typedef vigra::TinyVector<int64_t, 3> Shape3;
-typedef vigra::Box<int64_t, 3> Block3d;
+
 /**
  * @brief      used to get the appeared and 
  *             disappeared block indexes after

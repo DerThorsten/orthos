@@ -80,6 +80,7 @@ class MoreTileInfo(injector(TileInfo), TileInfo):
 
 
     def slicing3d(self):
+        #assert False
         begin = self.roi3d.begin
         end   = self.roi3d.end
         return tuple([slice(b,e) for b,e in zip(begin,end)])
@@ -87,6 +88,7 @@ class MoreTileInfo(injector(TileInfo), TileInfo):
 
 
     def slicing2d(self):
+        #assert False
         begin = self.roi2d.begin
         end   = self.roi2d.end
         return tuple([slice(b,e) for b,e in zip(begin,end)])
